@@ -24,7 +24,7 @@ class Utils {
           .placeholder(R.color.white)
           .into(imageView);
     } catch (ClassNotFoundException e) {
-      throw new IllegalArgumentException("Must set an Square Picasso image loader dependency!");
+      throw new IllegalArgumentException("Must set a Square Picasso image loader dependency!");
     }
   }
 
@@ -40,7 +40,7 @@ class Utils {
           .crossFade()
           .into(imageView);
     } catch (ClassNotFoundException e) {
-      throw new IllegalArgumentException("Must set an Google Glide image loader dependency!");
+      throw new IllegalArgumentException("Must set a Google Glide image loader dependency!");
     }
   }
 }
