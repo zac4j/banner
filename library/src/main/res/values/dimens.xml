@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <!--size-->
+  <dimen name="indicator.medium">6dp</dimen>
+  <dimen name="indicator.small">4dp</dimen>
+
+  <!--height-->
+  <dimen name="banner_height_medium">240dp</dimen>
+  <dimen name="banner_height_small">180dp</dimen>
+
+  <!--space-->
+  <dimen name="space.medium">16dp</dimen>
+  <dimen name="space.small">8dp</dimen>
+  <dimen name="space.very_small">4dp</dimen>
+  <dimen name="space.radius">2dp</dimen>
+  <dimen name="space.divider">1dp</dimen>
+</resources>
