@@ -1,9 +1,11 @@
 package com.zac4j.library;
 
+import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import java.util.List;
 
 /**
  * PagerAdapter
@@ -12,18 +14,47 @@ import android.widget.ImageView;
 
 class BannerAdapter extends PagerAdapter {
 
-  private int[] mBannerResources;
+  private Context mContext;
+  private boolean mIsOffline;
+  private int[] mOfflineImageRes;
+  private List<String> mOnlineImageRes;
+  private ImageLoader mImageLoader;
 
-  BannerAdapter(int[] bannerResources) {
-    mBannerResources = bannerResources;
+  BannerAdapter(Context context) {
+    mContext = context;
+  }
+
+  void setOffline(boolean isOffline) {
+    mIsOffline = isOffline;
+  }
+
+  void setOfflineImageRes(int[] offlineImageRes) {
+    mOfflineImageRes = offlineImageRes;
+  }
+
+  void setOnlineImageRes(List<String> onlineImageRes) {
+    mOnlineImageRes = onlineImageRes;
+  }
+
+  void setImageLoader(ImageLoader imageLoader) {
+    mImageLoader = imageLoader;
   }
 
   @Override public Object instantiateItem(ViewGroup container, int position) {
-    int resource = mBannerResources[position];
-    ImageView imageView = new ImageView(container.getContext());
-    imageView.setImageResource(resource);
-    imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-    container.addView(imageView);
+    ImageView imageView = new ImageView(mContext);
+    if (mIsOffline) {
+      imageView.setImageResource(mOfflineImageRes[position]);
+      imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+      container.addView(imageView);
+    } else {
+      String imageUrl = mOnlineImageRes.get(position);
+      if (mImageLoader == ImageLoader.GLIDE) {
+        Utils.loadImageWithGlide(mContext, imageUrl, imageView);
+      } else {
+        Utils.loadImageWithPicasso(mContext, imageUrl, imageView);
+      }
+      container.addView(imageView);
+    }
     return imageView;
   }
 
@@ -32,7 +63,7 @@ class BannerAdapter extends PagerAdapter {
   }
 
   @Override public int getCount() {
-    return mBannerResources.length;
+    return mIsOffline ? mOfflineImageRes.length : mOnlineImageRes.size();
   }
 
   @Override public boolean isViewFromObject(View view, Object object) {

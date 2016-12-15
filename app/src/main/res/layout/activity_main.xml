@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context="com.zac4j.sample.MainActivity">
 
-  <com.zac4j.library.Banner
-      android:id="@id/banner"
+  <com.zac4j.library.BannerView
+      android:id="@id/banner_view"
       android:layout_width="match_parent"
       android:layout_height="@dimen/banner_height_small"
       />
