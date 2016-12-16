@@ -6,7 +6,13 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * BannerPager
@@ -15,12 +21,17 @@ import java.util.List;
 
 public class BannerView extends FrameLayout {
 
+  private static final String TAG = "BannerView";
+
   private Context mContext;
   private ViewPager mViewPager;
   private CircleIndicator mIndicator;
 
-  private boolean mAutoSlide;
   private View mView;
+  private int mSlideCount;
+  private int mBeep;
+  private boolean mNeedPause;
+  private CompositeDisposable mDisposable;
 
   public BannerView(Context context) {
     super(context);
@@ -39,6 +50,22 @@ public class BannerView extends FrameLayout {
     mViewPager = (ViewPager) mView.findViewById(R.id.view_pager);
 
     mIndicator = (CircleIndicator) mView.findViewById(R.id.view_indicator);
+
+    mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+      @Override
+      public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+      }
+
+      @Override public void onPageSelected(int position) {
+        mBeep = position;
+      }
+
+      @Override public void onPageScrollStateChanged(int state) {
+        mNeedPause = !(state == ViewPager.SCROLL_STATE_IDLE);
+      }
+    });
+
+    mDisposable = new CompositeDisposable();
   }
 
   void show() {
@@ -51,6 +78,11 @@ public class BannerView extends FrameLayout {
     }
   }
 
+  /**
+   * Set offline image resource.
+   *
+   * @param offlineData offline image resources.
+   */
   void setOfflineData(int[] offlineData) {
     BannerAdapter adapter = new BannerAdapter(mContext);
     adapter.setOffline(true);
@@ -59,15 +91,79 @@ public class BannerView extends FrameLayout {
     mIndicator.setViewPager(mViewPager);
   }
 
-  void setNetworkData(List<String> networkData, ImageLoader imageLoader) {
+  /**
+   * set online image resource.
+   *
+   * @param onlineData online image resources.
+   * @param imageLoader image loader.
+   */
+  void setOnlineData(List<String> onlineData, ImageLoader imageLoader) {
     BannerAdapter adapter = new BannerAdapter(mContext);
-    adapter.setOnlineImageRes(networkData);
+    adapter.setOnlineImageRes(onlineData);
     adapter.setImageLoader(imageLoader);
     mViewPager.setAdapter(adapter);
     mIndicator.setViewPager(mViewPager);
   }
 
+  /**
+   * Set if auto slide page view.
+   *
+   * @param autoSlide auto slide page view.
+   */
   public void setAutoSlide(boolean autoSlide) {
-    mAutoSlide = autoSlide;
+    boolean autoSlide1 = autoSlide;
+    mSlideCount = mViewPager.getAdapter().getCount();
+    applyAutoSlide();
+  }
+
+  /**
+   * On view destroyed need clear interval task.
+   */
+  @Override protected void onDetachedFromWindow() {
+    super.onDetachedFromWindow();
+    mDisposable.clear();
+  }
+
+  /**
+   * Apply auto slide logic
+   */
+  private void applyAutoSlide() {
+    mDisposable.add(getObservable().subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeWith(getObserver()));
+  }
+
+  /**
+   * Get interval task observable object.
+   */
+  private Observable<? extends Long> getObservable() {
+    return Observable.interval(0, 3, TimeUnit.SECONDS);
+  }
+
+  /**
+   * Get observer to consume observable object.
+   */
+  private DisposableObserver<Long> getObserver() {
+    return new DisposableObserver<Long>() {
+      @Override public void onNext(Long value) {
+        if (mNeedPause) {
+          return;
+        }
+        if (mBeep == mSlideCount) {
+          mBeep = 0;
+        }
+        mViewPager.setCurrentItem(mBeep);
+        mBeep++;
+        Logger.i(TAG, "Beep");
+      }
+
+      @Override public void onError(Throwable e) {
+        Logger.e(TAG, e.getMessage());
+      }
+
+      @Override public void onComplete() {
+        Logger.i(TAG, "Complete");
+      }
+    };
   }
 }

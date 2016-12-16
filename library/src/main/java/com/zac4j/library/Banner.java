@@ -18,7 +18,7 @@ public class Banner {
     if (isOffline) {
       bannerView.setOfflineData(offlineRes);
     } else {
-      bannerView.setNetworkData(networkImageRes, imageLoader);
+      bannerView.setOnlineData(networkImageRes, imageLoader);
     }
     bannerView.setAutoSlide(autoSlide);
   }
