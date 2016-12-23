@@ -11,7 +11,7 @@
       android:layout_height="match_parent"
       />
 
-  <com.zac4j.library.CircleIndicator
+  <com.zac4j.widget.CircleIndicator
       android:id="@id/view_indicator"
       android:layout_width="match_parent"
       android:layout_height="18dp"

@@ -3,8 +3,8 @@ package com.zac4j.sample;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import com.zac4j.library.Banner;
-import com.zac4j.library.BannerView;
 import com.zac4j.library.ImageLoader;
+import com.zac4j.widget.BannerView;
 import java.util.ArrayList;
 import java.util.List;
 

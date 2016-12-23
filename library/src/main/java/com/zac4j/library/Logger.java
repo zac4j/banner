@@ -11,13 +11,13 @@ public class Logger {
 
   static boolean DEBUG = BuildConfig.DEBUG;
 
-  static void e(String tag, String errMsg) {
+  public static void e(String tag, String errMsg) {
     if (DEBUG) {
       Log.e(tag, errMsg);
     }
   }
 
-  static void i(String tag, String errMsg) {
+  public static void i(String tag, String errMsg) {
     if (DEBUG) {
       Log.i(tag, errMsg);
     }

@@ -1,6 +1,7 @@
 package com.zac4j.library;
 
 import android.support.annotation.NonNull;
+import com.zac4j.widget.BannerView;
 import java.util.List;
 
 /**

@@ -12,7 +12,7 @@ import java.util.List;
  * Created by zac on 12/12/2016.
  */
 
-class BannerAdapter extends PagerAdapter {
+public class BannerAdapter extends PagerAdapter {
 
   private Context mContext;
   private boolean mIsOffline;
@@ -20,23 +20,23 @@ class BannerAdapter extends PagerAdapter {
   private List<String> mOnlineImageRes;
   private ImageLoader mImageLoader;
 
-  BannerAdapter(Context context) {
+  public BannerAdapter(Context context) {
     mContext = context;
   }
 
-  void setOffline(boolean isOffline) {
+  public void setOffline(boolean isOffline) {
     mIsOffline = isOffline;
   }
 
-  void setOfflineImageRes(int[] offlineImageRes) {
+  public void setOfflineImageRes(int[] offlineImageRes) {
     mOfflineImageRes = offlineImageRes;
   }
 
-  void setOnlineImageRes(List<String> onlineImageRes) {
+  public void setOnlineImageRes(List<String> onlineImageRes) {
     mOnlineImageRes = onlineImageRes;
   }
 
-  void setImageLoader(ImageLoader imageLoader) {
+  public void setImageLoader(ImageLoader imageLoader) {
     mImageLoader = imageLoader;
   }
 
