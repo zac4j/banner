@@ -1,11 +1,14 @@
 # Banner
-A simple, responsive, touch-enabled image slider.
+A simple, responsive, touch-enabled,[RxJava2][r2] based image slider.
 ## Getting Started
-1.Include Banner framework and its dependencies in your project dependency.
+#### 1.Include Banner framework and its dependencies in your project dependency.
 ```groovy
-Pending
+compile 'com.github.bumptech.glide:glide:3.7.0' // or
+// compile 'com.squareup.picasso:picasso:2.5.2' // if you like
+compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+compile 'io.reactivex.rxjava2:rxjava:2.0.1'
 ```
-2.Add the BannerView widget in your xml file.
+#### 2.Add the BannerView widget in your xml file.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
@@ -22,7 +25,7 @@ Pending
 
 </LinearLayout>
 ```
-3.Initialize Banner
+#### 3.Initialize Banner
 ```java
 public class MainActivity extends Activity {
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +56,19 @@ public class MainActivity extends Activity {
   }
 }
 ```
-4.Options and Settings
+#### 4.Options and Settings
+Write your own logic using these APIs:
+- `bind(BannerView bannerView)` Bind BannerView in your layout with Banner Builder.
+- `engine(ImageLoader engine)` Image loader engine, currently only support [Glide][glide] or [Picasso][picasso].
+- `onlineRes(List<String> imgUrlList)` Download online image resources and display it.
+- `offline(boolean isOffline)` If is load local image.
+- `offlineRes(int[] imgUris)` Load local image resources and display it.
+- `autoSlide(boolean isAutoSlide)` If image slider is auto slide.
 
+## License
+The code is available under the [Apache License][license]
 
-
+[r2]:https://github.com/ReactiveX/RxJava
+[glide]:https://github.com/bumptech/glide
+[picasso]:https://github.com/square/picasso
+[license]:https://github.com/zac4j/Banner/blob/master/LICENSE
