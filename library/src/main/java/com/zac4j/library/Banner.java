@@ -13,15 +13,11 @@ public class Banner {
 
   private BannerView mBannerView;
 
-  private Banner(BannerView bannerView, boolean isOffline, int[] offlineRes,
-      ImageLoader imageLoader, List<String> networkImageRes, boolean autoSlide) {
+  private Banner(BannerView bannerView, ImageLoader imageLoader, int[] offlineRes,
+      List<String> onlineRes, boolean autoSlide) {
     mBannerView = bannerView;
-    if (isOffline) {
-      bannerView.setOfflineData(offlineRes);
-    } else {
-      bannerView.setOnlineData(networkImageRes, imageLoader);
-    }
-    bannerView.setAutoSlide(autoSlide);
+    mBannerView.setData(imageLoader, offlineRes, onlineRes);
+    mBannerView.setAutoSlide(autoSlide);
   }
 
   public void show() {
@@ -37,7 +33,6 @@ public class Banner {
     private ImageLoader imageLoader;
     private List<String> imageUrlList;
     private int[] imageRes;
-    private boolean isOffline;
     private boolean isAutoSlide;
 
     public Builder() {
@@ -75,11 +70,6 @@ public class Banner {
       return this;
     }
 
-    public Builder offline(boolean isOffline) {
-      this.isOffline = isOffline;
-      return this;
-    }
-
     public Builder autoSlide(boolean isAutoSlide) {
       this.isAutoSlide = isAutoSlide;
       return this;
@@ -90,11 +80,11 @@ public class Banner {
         throw new IllegalArgumentException("BannerView has not been bound!");
       }
 
-      if (isOffline && imageRes.length == 0) {
+      if (imageRes.length == 0) {
         throw new IllegalStateException("offline resource required!");
       }
 
-      return new Banner(bannerView, isOffline, imageRes, imageLoader, imageUrlList, isAutoSlide);
+      return new Banner(bannerView, imageLoader, imageRes, imageUrlList, isAutoSlide);
     }
   }
 }

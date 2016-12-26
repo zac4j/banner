@@ -14,21 +14,23 @@ import com.squareup.picasso.Picasso;
 
 class Utils {
 
-  static void loadImageWithPicasso(Context context, String imageUrl, ImageView imageView) {
+  static void loadImageWithPicasso(Context context, String imageUrl, int placeholder,
+      ImageView imageView) {
     try {
       Class.forName("com.squareup.picasso.Picasso");
       Picasso.with(context)
           .load(imageUrl)
           .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
           .centerCrop()
-          .placeholder(R.color.white)
+          .placeholder(placeholder == 0 ? R.color.white : placeholder)
           .into(imageView);
     } catch (ClassNotFoundException e) {
       throw new IllegalArgumentException("Must set a Square Picasso image loader dependency!");
     }
   }
 
-  static void loadImageWithGlide(Context context, String imageUrl, ImageView imageView) {
+  static void loadImageWithGlide(Context context, String imageUrl, int placeholder,
+      ImageView imageView) {
     try {
       Class.forName("com.bumptech.glide.Glide");
       Glide.with(context)
@@ -36,11 +38,11 @@ class Utils {
           .skipMemoryCache(true)
           .diskCacheStrategy(DiskCacheStrategy.NONE)
           .centerCrop()
-          .placeholder(R.color.white)
+          .placeholder(placeholder == 0 ? R.color.white : placeholder)
           .crossFade()
           .into(imageView);
     } catch (ClassNotFoundException e) {
-      throw new IllegalArgumentException("Must set a Google Glide image loader dependency!");
+      throw new IllegalArgumentException("Must set a Glide image loader dependency!");
     }
   }
 }

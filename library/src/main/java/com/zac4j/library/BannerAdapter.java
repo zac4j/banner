@@ -15,46 +15,42 @@ import java.util.List;
 public class BannerAdapter extends PagerAdapter {
 
   private Context mContext;
-  private boolean mIsOffline;
   private int[] mOfflineImageRes;
   private List<String> mOnlineImageRes;
   private ImageLoader mImageLoader;
+  private OnBannerClickListener mOnBannerClickListener;
 
-  public BannerAdapter(Context context) {
+  public BannerAdapter(Context context, ImageLoader imageLoader, int[] offlineImageRes,
+      List<String> onlineImageRes) {
     mContext = context;
-  }
-
-  public void setOffline(boolean isOffline) {
-    mIsOffline = isOffline;
-  }
-
-  public void setOfflineImageRes(int[] offlineImageRes) {
+    mImageLoader = imageLoader;
     mOfflineImageRes = offlineImageRes;
-  }
-
-  public void setOnlineImageRes(List<String> onlineImageRes) {
     mOnlineImageRes = onlineImageRes;
   }
 
-  public void setImageLoader(ImageLoader imageLoader) {
-    mImageLoader = imageLoader;
+  public void setOnBannerClickListener(OnBannerClickListener listener) {
+    mOnBannerClickListener = listener;
   }
 
-  @Override public Object instantiateItem(ViewGroup container, int position) {
+  @Override public Object instantiateItem(ViewGroup container, final int position) {
     ImageView imageView = new ImageView(mContext);
-    if (mIsOffline) {
-      imageView.setImageResource(mOfflineImageRes[position]);
-      imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-      container.addView(imageView);
-    } else {
-      String imageUrl = mOnlineImageRes.get(position);
-      if (mImageLoader == ImageLoader.GLIDE) {
-        Utils.loadImageWithGlide(mContext, imageUrl, imageView);
-      } else {
-        Utils.loadImageWithPicasso(mContext, imageUrl, imageView);
-      }
-      container.addView(imageView);
+    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+    String imageUrl = mOnlineImageRes.get(position);
+    int placeholder = 0;
+    if (mOfflineImageRes != null && mOfflineImageRes.length != 0) {
+      placeholder = mOfflineImageRes[position];
     }
+    if (mImageLoader == ImageLoader.GLIDE) {
+      Utils.loadImageWithGlide(mContext, imageUrl, placeholder, imageView);
+    } else {
+      Utils.loadImageWithPicasso(mContext, imageUrl, placeholder, imageView);
+    }
+    container.addView(imageView);
+    imageView.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View view) {
+        mOnBannerClickListener.onClick(position);
+      }
+    });
     return imageView;
   }
 
@@ -63,7 +59,7 @@ public class BannerAdapter extends PagerAdapter {
   }
 
   @Override public int getCount() {
-    return mIsOffline ? mOfflineImageRes.length : mOnlineImageRes.size();
+    return mOnlineImageRes.size();
   }
 
   @Override public boolean isViewFromObject(View view, Object object) {

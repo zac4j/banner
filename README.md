@@ -1,5 +1,5 @@
 # Banner
-A simple, responsive, touch-enabled,[RxJava2][r2] based image slider.
+A simple, responsive, touch-enabled, [RxJava2][r2] based image slider.
 ## Getting Started
 #### 1.Include Banner framework and its dependencies in your project dependency.
 ```groovy
