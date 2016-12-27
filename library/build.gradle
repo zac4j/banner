@@ -1,4 +1,8 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+version = "0.0.1"
 
 android {
   compileSdkVersion 25
@@ -16,4 +20,71 @@ dependencies {
   provided 'com.github.bumptech.glide:glide:3.7.0'
   provided 'io.reactivex.rxjava2:rxandroid:2.0.1'
   provided 'io.reactivex.rxjava2:rxjava:2.0.1'
+}
+
+def siteUrl = 'https://github.com/zac4j/Banner'
+def gitUrl = 'https://github.com/zac4j/Banner.git'
+group = "com.zac4j.library"
+
+install {
+  repositories.mavenInstaller {
+    // This generates POM.xml with proper parameters
+    pom {
+      artifactId = "Banner"
+      project {
+        packaging 'aar'
+
+        // Add your description here
+        name '<A image slider library in Android>'
+        url siteUrl
+
+        // Set your license
+        licenses {
+          license {
+            name 'The Apache Software License, Version 2.0'
+            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+          }
+        }
+        developers {
+          developer {
+            id 'zac4j'
+            name 'zac'
+            email 'zac_ju@163.com'
+          }
+        }
+        scm {
+          connection gitUrl
+          developerConnection gitUrl
+          url siteUrl
+        }
+      }
+    }
+  }
+}
+
+task sourcesJar(type: Jar) {
+  from android.sourceSets.main.java.srcDirs
+  classifier = 'sources'
+}
+
+artifacts {
+  archives sourcesJar
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+  user = properties.getProperty("bintray.user")
+  key = properties.getProperty("bintray.apikey")
+
+  configurations = ['archives']
+  pkg {
+    repo = "maven"
+    name = "Banner"
+    websiteUrl = siteUrl
+    vcsUrl = gitUrl
+    licenses = ["Apache-2.0"]
+    publish = true
+  }
 }

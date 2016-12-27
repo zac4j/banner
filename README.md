@@ -1,8 +1,13 @@
 # Banner
 A simple, responsive, touch-enabled, [RxJava2][r2] based image slider.
+
+## Warning
+If you hate [RxJava][r2] or [Picasso][picasso]/[Glide][glide] by now, i personally beg you don't select this library,it's waste your time.
+
 ## Getting Started
 #### 1.Include Banner framework and its dependencies in your project dependency.
 ```groovy
+compile 'com.zac4j.library:Banner:0.0.1'
 compile 'com.github.bumptech.glide:glide:3.7.0'
 // compile 'com.squareup.picasso:picasso:2.5.2' // as your like
 compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
@@ -72,9 +77,6 @@ Write your own logic using these APIs:
 - `onlineRes(List<String> imgUrlList)` Download online image resources and display it.
 - `onClick(Banenr.OnClickListener listener)` On banner item click callback.
 - `autoSlide(boolean isAutoSlide)` If image slider is auto slide.
-
-## Warning
-If you don't know [RxJava][r2] or [Picasso][picasso]/[Glide][glide] by now, i personally beg you don't select this library,it's waste your time.
 
 ## License
 The code is available under the [Apache License][license]
