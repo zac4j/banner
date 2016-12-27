@@ -11,12 +11,17 @@ import java.util.List;
 
 public class Banner {
 
+  public interface OnClickListener {
+    void onClick(int position);
+  }
+
   private BannerView mBannerView;
 
   private Banner(BannerView bannerView, ImageLoader imageLoader, int[] offlineRes,
-      List<String> onlineRes, boolean autoSlide) {
+      List<String> onlineRes, OnClickListener listener, boolean autoSlide) {
     mBannerView = bannerView;
     mBannerView.setData(imageLoader, offlineRes, onlineRes);
+    mBannerView.setOnBannerClickListener(listener);
     mBannerView.setAutoSlide(autoSlide);
   }
 
@@ -33,6 +38,7 @@ public class Banner {
     private ImageLoader imageLoader;
     private List<String> imageUrlList;
     private int[] imageRes;
+    private OnClickListener mOnClickListener;
     private boolean isAutoSlide;
 
     public Builder() {
@@ -70,6 +76,14 @@ public class Banner {
       return this;
     }
 
+    public Builder onClick(@NonNull OnClickListener listener) {
+      if (listener == null) {
+        throw new IllegalArgumentException("Banner on click listener is empty!");
+      }
+      this.mOnClickListener = listener;
+      return this;
+    }
+
     public Builder autoSlide(boolean isAutoSlide) {
       this.isAutoSlide = isAutoSlide;
       return this;
@@ -84,7 +98,8 @@ public class Banner {
         throw new IllegalStateException("offline resource required!");
       }
 
-      return new Banner(bannerView, imageLoader, imageRes, imageUrlList, isAutoSlide);
+      return new Banner(bannerView, imageLoader, imageRes, imageUrlList, mOnClickListener,
+          isAutoSlide);
     }
   }
 }

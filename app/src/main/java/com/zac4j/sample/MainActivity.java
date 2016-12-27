@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 import com.zac4j.library.Banner;
 import com.zac4j.library.ImageLoader;
-import com.zac4j.library.OnBannerClickListener;
 import com.zac4j.widget.BannerView;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
 
     BannerView bannerView = (BannerView) findViewById(R.id.banner_view);
-    showOnlineBanner(bannerView);
+    showBanner(bannerView);
   }
 
   private int[] getOfflineRes() {
@@ -32,17 +31,18 @@ public class MainActivity extends AppCompatActivity {
     return imageUrlList;
   }
 
-  private void showOnlineBanner(BannerView bannerView) {
+  private void showBanner(BannerView bannerView) {
     Banner banner = new Banner.Builder().bind(bannerView)
         .offlineRes(getOfflineRes())
         .onlineRes(getOnlineRes())
         .engine(ImageLoader.GLIDE)
+        .onClick(mListener)
         .autoSlide(true)
         .build();
     banner.show();
   }
 
-  private OnBannerClickListener mListener = new OnBannerClickListener() {
+  private Banner.OnClickListener mListener = new Banner.OnClickListener() {
     @Override public void onClick(int position) {
       Toast.makeText(MainActivity.this, "Position >> " + position, Toast.LENGTH_SHORT).show();
     }

@@ -6,10 +6,10 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
+import com.zac4j.library.Banner;
 import com.zac4j.library.BannerAdapter;
 import com.zac4j.library.ImageLoader;
 import com.zac4j.library.Logger;
-import com.zac4j.library.OnBannerClickListener;
 import com.zac4j.library.R;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -106,7 +106,7 @@ public class BannerView extends FrameLayout {
    *
    * @param listener on banner click listener
    */
-  public void setOnBannerClickListener(OnBannerClickListener listener) {
+  public void setOnBannerClickListener(Banner.OnClickListener listener) {
     if (listener == null || mAdapter == null) {
       return;
     }

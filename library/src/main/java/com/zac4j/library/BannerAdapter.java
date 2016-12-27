@@ -18,7 +18,7 @@ public class BannerAdapter extends PagerAdapter {
   private int[] mOfflineImageRes;
   private List<String> mOnlineImageRes;
   private ImageLoader mImageLoader;
-  private OnBannerClickListener mOnBannerClickListener;
+  private Banner.OnClickListener mOnBannerClickListener;
 
   public BannerAdapter(Context context, ImageLoader imageLoader, int[] offlineImageRes,
       List<String> onlineImageRes) {
@@ -28,7 +28,7 @@ public class BannerAdapter extends PagerAdapter {
     mOnlineImageRes = onlineImageRes;
   }
 
-  public void setOnBannerClickListener(OnBannerClickListener listener) {
+  public void setOnBannerClickListener(Banner.OnClickListener listener) {
     mOnBannerClickListener = listener;
   }
 
