@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
   @Override protected void onCreate(Bundle savedInstanceState) {
     ...
     BannerView bannerView = (BannerView) findViewById(R.id.banner_view);
-    showOnlineBanner(bannerView);
+    showBanner(bannerView);
   }
 
   private int[] getOfflineRes() {
