@@ -21,7 +21,7 @@ public class Banner {
       List<String> onlineRes, OnClickListener listener, boolean autoSlide) {
     mBannerView = bannerView;
     mBannerView.setData(imageLoader, offlineRes, onlineRes);
-    mBannerView.setOnBannerClickListener(listener);
+    mBannerView.setOnClickListener(listener);
     mBannerView.setAutoSlide(autoSlide);
   }
 

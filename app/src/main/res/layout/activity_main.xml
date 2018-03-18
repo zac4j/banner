@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zac4j.widget.BannerView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@id/banner_view"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/banner_height_small"
-    />
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    >
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical" />
+
+</RelativeLayout>

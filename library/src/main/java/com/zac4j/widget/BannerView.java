@@ -106,7 +106,7 @@ public class BannerView extends FrameLayout {
    *
    * @param listener on banner click listener
    */
-  public void setOnBannerClickListener(Banner.OnClickListener listener) {
+  public void setOnClickListener(Banner.OnClickListener listener) {
     if (listener == null || mAdapter == null) {
       return;
     }
