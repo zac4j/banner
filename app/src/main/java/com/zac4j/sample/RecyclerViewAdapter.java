@@ -80,7 +80,7 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
      */
     @Override
     public int getItemViewType(int position) {
-        return (position % MainActivity.ITEMS_PER_AD == 0) ? BANNER_AD_VIEW_TYPE
+        return (position % AdMobActivity.ITEMS_PER_AD == 0) ? BANNER_AD_VIEW_TYPE
                 : MENU_ITEM_VIEW_TYPE;
     }
 

@@ -31,7 +31,7 @@ import org.json.JSONObject;
  * are no longer visible to the user. Recycling views improves performance by avoiding
  * the creation of unnecessary views or performing expensive findViewByID() lookups.</p>
  */
-public class MainActivity extends AppCompatActivity {
+public class AdMobActivity extends AppCompatActivity {
 
     // A banner ad is placed in every 8th position in the RecyclerView.
     public static final int ITEMS_PER_AD = 8;
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_admob);
 
         mRecyclerView = findViewById(R.id.recycler_view);
 
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         // Loop through the items array and place a new banner ad in every ith position in
         // the items List.
         for (int i = 0; i <= mRecyclerViewItems.size(); i += ITEMS_PER_AD) {
-            final AdView adView = new AdView(MainActivity.this);
+            final AdView adView = new AdView(AdMobActivity.this);
             adView.setAdSize(AdSize.BANNER);
             adView.setAdUnitId(AD_UNIT_ID);
             mRecyclerViewItems.add(i, adView);
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
             public void onAdFailedToLoad(int errorCode) {
                 // The previous banner ad failed to load. Call this method again to load
                 // the next ad in the items list.
-                Log.e("MainActivity", "The previous banner ad failed to load. Attempting to"
+                Log.e("AdMobActivity", "The previous banner ad failed to load. Attempting to"
                         + " load the next banner ad in the items list.");
                 loadBannerAd(index + ITEMS_PER_AD);
             }
@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
                 mRecyclerViewItems.add(menuItem);
             }
         } catch (IOException | JSONException exception) {
-            Log.e(MainActivity.class.getName(), "Unable to parse JSON file.", exception);
+            Log.e(AdMobActivity.class.getName(), "Unable to parse JSON file.", exception);
         }
     }
 
