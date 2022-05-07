@@ -2,7 +2,7 @@
 A simple, responsive, touch-enabled, [RxJava2][r2] based image slider.
 
 ## Warning
-If you hate [RxJava][r2] or [Picasso][picasso]/[Glide][glide] by now, i personally beg you don't select this library,it's waste your time.
+[RxJava][r2] and ImageLoader(either [Picasso][picasso] or [Glide][glide]) dependency is required, it's not recommend use this library directly if your project not include RxJava or ImageLoader.
 
 ## ScreenShot
 ![auto-slide][slide]
@@ -12,7 +12,7 @@ If you hate [RxJava][r2] or [Picasso][picasso]/[Glide][glide] by now, i personal
 ```groovy
 compile 'com.zac4j.library:Banner:0.0.1'
 compile 'com.github.bumptech.glide:glide:3.7.0'
-// compile 'com.squareup.picasso:picasso:2.5.2' // as your wish
+// compile 'com.squareup.picasso:picasso:2.5.2' // pick glide or picasso
 compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
 compile 'io.reactivex.rxjava2:rxjava:2.0.1'
 ```
